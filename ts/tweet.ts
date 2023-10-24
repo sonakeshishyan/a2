@@ -4,13 +4,23 @@ class Tweet {
 
 	constructor(tweet_text:string, tweet_time:string) {
         this.text = tweet_text;
-		this.time = new Date(tweet_time);//, "ddd MMM D HH:mm:ss Z YYYY"
+		this.time = new Date(tweet_time);
+        //, "ddd MMM D HH:mm:ss Z YYYY"
 	}
 
 	//returns either 'live_event', 'achievement', 'completed_event', or 'miscellaneous'
     get source():string {
+        if (this.text.match("completed")){
+            return "live_event"
+        }
+        if (this.text.match("PB")){
+            return "achievement"
+        }
+        if (this.text.match("posted")){
+            return "complete_event"
+        }
         //TODO: identify whether the source is a live event, an achievement, a completed event, or miscellaneous.
-        return "unknown";
+        return "miscellaneous";
     }
 
     //returns a boolean, whether the text includes any content written by the person tweeting.
