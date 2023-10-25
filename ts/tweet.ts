@@ -10,14 +10,14 @@ class Tweet {
 
 	//returns either 'live_event', 'achievement', 'completed_event', or 'miscellaneous'
     get source():string {
-        if (this.text.match("completed")){
-            return "live_event"
+        if (this.text.startsWith("Just completed") || this.text.startsWith("Just posted")){
+            return "completed_event"
         }
-        if (this.text.match("PB")){
+        if (this.text.includes("PB") || this.text.startsWith("Achieved") || this.text.includes("personal record")){
             return "achievement"
         }
-        if (this.text.match("posted")){
-            return "complete_event"
+        if (this.text.includes("right now") || (this.text.startsWith("Watch"))){
+            return "live_event"
         }
         //TODO: identify whether the source is a live event, an achievement, a completed event, or miscellaneous.
         return "miscellaneous";
