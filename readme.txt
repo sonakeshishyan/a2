@@ -18,6 +18,9 @@
 3. What online resources did you consult when completing this assignment? (list sites like StackOverflow or specific URLs for tutorials, etc.)
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes
 https://www.w3schools.com/jsref/jsref_includes.asp
+https://www.geeksforgeeks.org/change-an-element-class-javascript/#
+https://mathjs.org/docs/reference/functions/format.html
+
 
 
 

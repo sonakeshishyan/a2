@@ -52,6 +52,21 @@ function parseTweets(runkeeper_tweets) {
 	document.getElementById('numberTweets').innerText =  tweet_array.length	
 	document.getElementById('firstDate').innerText = early.toLocaleDateString('en-US',format1)
 	document.getElementById('lastDate').innerText = latest.toLocaleDateString('en-US',format1)
+	
+	document.getElementsByClassName('completedEvents')[0].textContent = completed
+	document.getElementsByClassName('completedEvents')[1].textContent = completed
+	document.getElementsByClassName('completedEventsPct')[0].textContent = math.format(completed/tweet_array.length * 100, 4) + '%'
+
+	document.getElementsByClassName('liveEvents')[0].textContent = live
+	document.getElementsByClassName('liveEventsPct')[0].textContent =  math.format(live/tweet_array.length * 100, 4) + '%'
+
+	document.getElementsByClassName('achievements')[0].textContent = achievement
+	document.getElementsByClassName('achievementsPct')[0].textContent = math.format(achievement/tweet_array.length * 100, 4) + '%'
+
+	document.getElementsByClassName('miscellaneous')[0].textContent = misc
+	document.getElementsByClassName('miscellaneousPct')[0].textContent = math.format(misc/tweet_array.length * 100, 4) + '%'
+	
+
 
 }
 
