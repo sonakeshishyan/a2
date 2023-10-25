@@ -37,17 +37,18 @@ class Tweet {
         if(!this.written) {
             return "";
         }
-        
-        var secondHalf = this.text.split('-', 1)
+        var secondHalf = this.text.split('https://t.co/', 1) // Filter out the link and everything after
+        var firstHalf = secondHalf[0].split('-') // Filter out the '-' and everything before 
 
         //TODO: parse the written text from the tweet
-        return "";
+        return firstHalf[1].trim(); // Leaves only the written text with no whitespace
     }
 
     get activityType():string {
         if (this.source != 'completed_event') {
             return "unknown";
         }
+        
         //TODO: parse the activity type from the text of the tweet
         return "";
     }
