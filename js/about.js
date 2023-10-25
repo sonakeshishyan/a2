@@ -16,8 +16,13 @@ function parseTweets(runkeeper_tweets) {
 
 	var early = new Date()
 	var latest = new Date(-1)
+ 
+	var written = 0
 
 	for (let i of tweet_array) {
+		if (i.written === true){
+			written += 1
+		}
 		if (i.source === 'completed_event') {
 			completed += 1
 		}
@@ -66,6 +71,8 @@ function parseTweets(runkeeper_tweets) {
 	document.getElementsByClassName('miscellaneous')[0].textContent = misc
 	document.getElementsByClassName('miscellaneousPct')[0].textContent = math.format(misc/tweet_array.length * 100, {notation: 'fixed', precision: 2}) + '%'
 	
+	document.getElementsByClassName('written')[0].textContent = written
+	document.getElementsByClassName('writtenPct')[0].textContent = math.format(written/tweet_array.length * 100, {notation: 'fixed', precision: 2}) + '%'
 
 
 }

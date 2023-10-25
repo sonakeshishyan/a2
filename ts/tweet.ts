@@ -10,29 +10,36 @@ class Tweet {
 
 	//returns either 'live_event', 'achievement', 'completed_event', or 'miscellaneous'
     get source():string {
-        if (this.text.startsWith("Just completed") || this.text.startsWith("Just posted")){
+        if (this.text.startsWith("Just completed") || this.text.startsWith("Just posted")){ // if contains completed or posted then it's completed event
             return "completed_event"
         }
-        if (this.text.includes("PB") || this.text.startsWith("Achieved") || this.text.includes("personal record")){
+        if (this.text.includes("PB") || this.text.startsWith("Achieved") || this.text.includes("personal record")){ // if contains personal record, or achieved then achievement
             return "achievement"
         }
-        if (this.text.includes("right now") || (this.text.startsWith("Watch"))){
+        if (this.text.includes("right now") || (this.text.startsWith("Watch"))){ //if includes right now or Watch then live_event
             return "live_event"
         }
-        //TODO: identify whether the source is a live event, an achievement, a completed event, or miscellaneous.
-        return "miscellaneous";
+        return "miscellaneous"; // if doesnt apply to any of the if statements, then miscellaneous
     }
 
     //returns a boolean, whether the text includes any content written by the person tweeting.
     get written():boolean {
-        //TODO: identify whether the tweet is written
+        if (this.text.includes("-")) {
+            return true
+        }
         return false;
     }
+
+    // written structure 'computer string' - 'written string' 'https://...' Need to get sentences after '-' and before 'https://' 
+    // 25% of tweets contains written
 
     get writtenText():string {
         if(!this.written) {
             return "";
         }
+        
+        var secondHalf = this.text.split('-', 1)
+
         //TODO: parse the written text from the tweet
         return "";
     }
