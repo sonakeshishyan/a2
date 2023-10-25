@@ -48,10 +48,20 @@ class Tweet {
         if (this.source != 'completed_event') {
             return "unknown";
         }
-        
+        const activityArray = ['bike', 'run', 'biking', 'walk', 'Freestyle', 'elliptical', 'spinning', 'meditation', 'swim', 'row', 'activity', 'Yoga', 'yoga',
+            'Crossfit', ]
+        for (let i = 0; i < activityArray.length; i++){
+            var secondHalf = this.text.split('@Runkeeper') // Filter out the link and everything after
+            var sentence = secondHalf[0].trim() // Trim to only the first sentence 
+            if (sentence.includes(activityArray[i]) === true){ // Checks which activity it is
+                return activityArray[i]
+            }
+        }      
+        return "";  
         //TODO: parse the activity type from the text of the tweet
-        return "";
+       
     }
+
 
     get distance():number {
         if(this.source != 'completed_event') {
