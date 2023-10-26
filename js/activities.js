@@ -12,17 +12,17 @@ function parseTweets(runkeeper_tweets) {
 	//TODO: create a new array or manipulate tweet_array to create a graph of the number of tweets containing each type of activity.
 	// New array of activities and the number of them
 	var activ = [
-		 { key: 'run', value: 0, distance: 0, weekend: 0, weekday: 0 },
-		 { key: 'bike', value: 0, distance: 0, weekend: 0, weekday: 0},
-		 { key: 'walk', value: 0, distance: 0, weekend: 0, weekday: 0 },
-		 { key: 'Freestyle', value: 0, distance: 0, weekend: 0, weekday: 0 },
-		 { key: 'elliptical', value: 0, distance: 0, weekend: 0, weekday: 0 },
-		 { key: 'spinning', value: 0, distance: 0, weekend: 0, weekday: 0 },
-		 { key: 'meditation', value: 0, distance: 0, weekend: 0, weekday: 0 },
-		 { key: 'swim', value: 0, distance: 0, weekend: 0, weekday: 0 },
-		 { key: 'row', value: 0, distance: 0, weekend: 0, weekday: 0 },
-		 { key: 'yoga', value: 0, distance: 0, weekend: 0, weekday: 0 },
-		 { key: 'Crossfit', value: 0, distance: 0, weekend: 0, weekday: 0 },
+		 { key: 'run', value: 0, distance: 0},
+		 { key: 'bike', value: 0, distance: 0},
+		 { key: 'walk', value: 0, distance: 0},
+		 { key: 'Freestyle', value: 0, distance: 0},
+		 { key: 'elliptical', value: 0, distance: 0},
+		 { key: 'spinning', value: 0, distance: 0},
+		 { key: 'meditation', value: 0, distance: 0},
+		 { key: 'swim', value: 0, distance: 0},
+		 { key: 'row', value: 0, distance: 0},
+		 { key: 'yoga', value: 0, distance: 0},
+		 { key: 'Crossfit', value: 0, distance: 0},
 		];
 
 	for (let i of tweet_array) { // If tweet matches an activity in activ, then add 1 to the activ array
@@ -87,49 +87,42 @@ function parseTweets(runkeeper_tweets) {
 	var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 	
 // Distance from all 3 activites on different days
-	var threeDis = []; // Array of each top 3 activity with distance on their day
-	
+	var threeDis = []; // Array of each top 3 activity with distance on their day d d
+
 	for (let i of tweet_array) { // Adds distance across top three activites
 		if ((i.activityType === sortedActiv[0].key) || (i.activityType === sortedActiv[1].key) || (i.activityType === sortedActiv[2].key)){
-			var day = days[i.time.getDay()]
-			var point = {key: day, distance: i.distance}
-			threeDis.push(point)
+			var preday = i.time.getDay()
+			var day = days[preday]
+			var distance = i.distance
+			threeDis.push({day, distance})
 		}
 	}
 
-	// const fs = require("fs");
-	// const distance = JSON.stringify(threeDis)
-
-	// fs.writeFileSync("data/distance.json", distance, (error) => {
-	// 	if (error) {
-	// 		console.error(error);
-	// 		throw error;
-	// 	}
-	// }) 
 
 	//TODO: create the visualizations which group the three most-tweeted activities by the day of the week.
 	//Use those visualizations to answer the questions about which activities tended to be longest and when.
 	distance_vis_spec = {
 		"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 	   "description": "A graph of the distances by day of the week for all of the three most tweeted-about activities.",
-	   "data": {},
+	   "data": {
+			"values": threeDis
+	   },
 	   "mark": 'point',
 	   "encoding": {
 		  "x": {
-			  field: "time (day)",
-			  type: "nominal",
-			 axis: {
-				 title: "Distances by Day of Week",
-			 }
-		  },
-		 "y": {
-			 field: "distance",
-			 type: "quantitative"
-			}
- 
-		  }
-	   }
+			field: "day",
+			type: "nominal",
+			},
 
+		   "y": {
+			 field: "distance",
+			 type: "quantitative"}
+		   },
+			// "color": {
+			// 	"field:": "weather",
+			// 	"type": "quantitative",
+			// },	  
+	   }
 	   vegaEmbed('#distanceVis', distance_vis_spec, {actions:false});
 
 }

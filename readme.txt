@@ -12,7 +12,7 @@
 - */3 Populating the table
 
 2. How long, in hours, did it take you to complete this assignment?
-4
+12
 
 
 3. What online resources did you consult when completing this assignment? (list sites like StackOverflow or specific URLs for tutorials, etc.)
@@ -26,6 +26,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 https://www.freecodecamp.org/news/how-to-convert-a-string-to-a-number-in-javascript/
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getDay
 https://www.javascripttutorial.net/javascript-dom/javascript-input-event/
+https://vega.github.io/vega-lite/docs/data.html#inline
 
 
 
