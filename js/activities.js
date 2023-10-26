@@ -52,7 +52,6 @@ function parseTweets(runkeeper_tweets) {
 			{ "activity": activ[9].key, "amount": activ[9].value},
 			{ "activity": activ[10].key, "amount": activ[10].value}
 		]
-
 	  },
 	  "mark": 'point',
 	  "encoding": {
@@ -63,11 +62,9 @@ function parseTweets(runkeeper_tweets) {
 				title: "Number of Tweets of Each Activity",
 			}
 		 },
-		
 		"y": {
 			field: "amount",
 			type: "quantitative"
-   
 		   }
 		 }
 	  }
@@ -87,40 +84,32 @@ function parseTweets(runkeeper_tweets) {
 
 // Weekend/weekday (Average across all activities)
 	// document.getElementById('weekdayOrWeekendLonger').innerText = "Weekdays"
-
+	var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+	
 // Distance from all 3 activites on different days
-	var threeDis = [
-		{key: "Sun", distance: 0},
-		{key: "Mon", distance: 0},
-		{key: "Tue", distance: 0},
-		{key: "Wed", distance: 0},
-		{key: "Thu", distance: 0},
-		{key: "Fri", distance: 0},
-		{key: "Sat", distance: 0},
-	]
-
+	var threeDis = []; // Array of each top 3 activity with distance on their day
+	
 	for (let i of tweet_array) { // Adds distance across top three activites
 		if ((i.activityType === sortedActiv[0].key) || (i.activityType === sortedActiv[1].key) || (i.activityType === sortedActiv[2].key)){
-			threeDis[i.time.getDay()].distance += i.distance
+			var day = days[i.time.getDay()]
+			var point = {key: day, distance: i.distance}
+			threeDis.push(point)
 		}
 	}
-	
+
+	// const title = Object.keys(threeDis[0])
+	// const refined = []
+	// refined.push(title)
+
+	// threeDis.forE
+
 	//TODO: create the visualizations which group the three most-tweeted activities by the day of the week.
 	//Use those visualizations to answer the questions about which activities tended to be longest and when.
-	distnace_vis_spec = {
+	distance_vis_spec = {
 		"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 	   "description": "A graph of the distances by day of the week for all of the three most tweeted-about activities.",
 	   "data": {
-		 "values": [ 
-			 { "Day of the Week": threeDis[0].key, "Distance": threeDis[0].distance},
-			 { "Day of the Week": threeDis[1].key, "Distance": threeDis[1].distance},
-			 { "Day of the Week": threeDis[2].key, "Distance": threeDis[2].distance},
-			 { "Day of the Week": threeDis[3].key, "Distance": threeDis[3].distance},
-			 { "Day of the Week": threeDis[4].key, "Distance": threeDis[4].distance},
-			 { "Day of the Week": threeDis[5].key, "Distance": threeDis[5].distance},
-			 { "Day of the Week": threeDis[6].key, "Distance": threeDis[6].distance}
-		 ]
- 
+		 "values": threeDis.forEach(item => {return item})
 	   },
 	   "mark": 'point',
 	   "encoding": {
@@ -131,11 +120,9 @@ function parseTweets(runkeeper_tweets) {
 				 title: "Distances by Day of Week",
 			 }
 		  },
-		 
 		 "y": {
 			 field: "distance",
 			 type: "quantitative"
-	
 			}
  
 		  }

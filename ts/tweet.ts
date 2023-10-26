@@ -68,7 +68,25 @@ class Tweet {
             return 0;
         }
         //TODO: prase the distance from the text of the tweet
-        return 0;
+        var index1 = this.text.indexOf("a")
+        var index2 = this.text.indexOf(this.activityType)
+        var secondHalf = this.text.split('@Runkeeper') // Filter out the link and everything after
+        var sentence = secondHalf[0].trim() // Trim to only the first sentence 
+        var number = sentence.substring(index1, index2)
+
+        // 1 mi = 1.609 km
+        if (number.trim().includes("km")) {
+            var math = number.trim().split("km")
+            var math2 = math[0].split("a")
+            var mile = Number(math2[1].trim()) / 1.609
+            return mile
+        }
+        else {
+            var math = number.trim().split("mi")
+            var math2 = math[0].split("a")
+            var mile1 = Number(math2[1].trim())
+            return mile1
+        }
     }
 
     getHTMLTableRow(rowNumber:number):string {
