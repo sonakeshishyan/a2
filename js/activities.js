@@ -97,20 +97,22 @@ function parseTweets(runkeeper_tweets) {
 		}
 	}
 
-	// const title = Object.keys(threeDis[0])
-	// const refined = []
-	// refined.push(title)
+	// const fs = require("fs");
+	// const distance = JSON.stringify(threeDis)
 
-	// threeDis.forE
+	// fs.writeFileSync("data/distance.json", distance, (error) => {
+	// 	if (error) {
+	// 		console.error(error);
+	// 		throw error;
+	// 	}
+	// }) 
 
 	//TODO: create the visualizations which group the three most-tweeted activities by the day of the week.
 	//Use those visualizations to answer the questions about which activities tended to be longest and when.
 	distance_vis_spec = {
 		"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 	   "description": "A graph of the distances by day of the week for all of the three most tweeted-about activities.",
-	   "data": {
-		 "values": threeDis.forEach(item => {return item})
-	   },
+	   "data": {},
 	   "mark": 'point',
 	   "encoding": {
 		  "x": {

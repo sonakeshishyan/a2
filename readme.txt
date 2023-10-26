@@ -5,9 +5,9 @@
 */20
 - 2/2 Tweet dates
 - 3/3 Tweet categories
-- */3 User-written tweets
-- */3 Determining activity type and distance
-- */3 Graphing activities by distance
+- 3/3 User-written tweets
+- 3/3 Determining activity type and distance
+- 1/3 Graphing activities by distance
 - */3 Implementing the search box
 - */3 Populating the table
 
@@ -25,6 +25,7 @@ https://www.geeksforgeeks.org/java-string-trim-method-example/
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
 https://www.freecodecamp.org/news/how-to-convert-a-string-to-a-number-in-javascript/
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getDay
+https://www.javascripttutorial.net/javascript-dom/javascript-input-event/
 
 
 
