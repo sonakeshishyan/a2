@@ -22,6 +22,7 @@ https://www.geeksforgeeks.org/change-an-element-class-javascript/#
 https://mathjs.org/docs/reference/functions/format.html
 https://www.w3schools.com/jsref/jsref_substring.asp
 https://www.geeksforgeeks.org/java-string-trim-method-example/
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
 
 
 4. What classmates or other individuals did you consult as part of this assignment? What did you discuss?
