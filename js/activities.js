@@ -10,48 +10,142 @@ function parseTweets(runkeeper_tweets) {
 	});
 
 	//TODO: create a new array or manipulate tweet_array to create a graph of the number of tweets containing each type of activity.
-	var activ = [// New array of activities and the number of them
-		 { key: 'run', value: 0 },
-		 { key: 'bike', value: 0 },
-		 { key: 'walk', value: 0 },
-		 { key: 'Freestyle', value: 0 },
-		 { key: 'elliptical', value: 0 },
-		 { key: 'spinning', value: 0 },
-		 { key: 'meditation', value: 0 },
-		 { key: 'swim', value: 0 },
-		 { key: 'row', value: 0 },
-		 { key: 'yoga', value: 0 },
-		 { key: 'Crossfit', value: 0 },
+	// New array of activities and the number of them
+	var activ = [
+		 { key: 'run', value: 0, distance: 0, weekend: 0, weekday: 0 },
+		 { key: 'bike', value: 0, distance: 0, weekend: 0, weekday: 0},
+		 { key: 'walk', value: 0, distance: 0, weekend: 0, weekday: 0 },
+		 { key: 'Freestyle', value: 0, distance: 0, weekend: 0, weekday: 0 },
+		 { key: 'elliptical', value: 0, distance: 0, weekend: 0, weekday: 0 },
+		 { key: 'spinning', value: 0, distance: 0, weekend: 0, weekday: 0 },
+		 { key: 'meditation', value: 0, distance: 0, weekend: 0, weekday: 0 },
+		 { key: 'swim', value: 0, distance: 0, weekend: 0, weekday: 0 },
+		 { key: 'row', value: 0, distance: 0, weekend: 0, weekday: 0 },
+		 { key: 'yoga', value: 0, distance: 0, weekend: 0, weekday: 0 },
+		 { key: 'Crossfit', value: 0, distance: 0, weekend: 0, weekday: 0 },
 		];
 
 	for (let i of tweet_array) { // If tweet matches an activity in activ, then add 1 to the activ array
 		for (var key in activ) {
-			if (i.activityType === activ[key]) {
+			if (i.activityType == activ[key].key) {
 				activ[key].value += 1
-				break //so it doesnt keep going once done already
+				activ[key].distance += i.distance
+				}
+			//so it doesnt keep going once done already
 			}
 		}
-
-	}
-
-	activity_vis_spec = {
-	  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+	
+	 activity_vis_spec = {
+	   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 	  "description": "A graph of the number of Tweets containing each type of activity.",
 	  "data": {
-	    "values": activ
+	    "values": [ 
+			{ "activity": activ[0].key, "amount": activ[0].value},
+			{ "activity": activ[1].key, "amount": activ[1].value},
+			{ "activity": activ[2].key, "amount": activ[2].value},
+			{ "activity": activ[3].key, "amount": activ[3].value},
+			{ "activity": activ[4].key, "amount": activ[4].value},
+			{ "activity": activ[5].key, "amount": activ[5].value},
+			{ "activity": activ[6].key, "amount": activ[6].value},
+			{ "activity": activ[7].key, "amount": activ[7].value},
+			{ "activity": activ[8].key, "amount": activ[8].value},
+			{ "activity": activ[9].key, "amount": activ[9].value},
+			{ "activity": activ[10].key, "amount": activ[10].value}
+		]
+
+	  },
+	  "mark": 'point',
+	  "encoding": {
+		 "x": {
+		 	field: "activity",
+		 	type: "nominal",
+			axis: {
+				title: "Number of Tweets of Each Activity",
+			}
+		 },
+		
+		"y": {
+			field: "amount",
+			type: "quantitative"
+   
+		   }
+		 }
 	  }
-	  //TODO: Add mark and encoding
-	};
+
 	vegaEmbed('#activityVis', activity_vis_spec, {actions:false});
+
+// Activity
 	document.getElementById('numberActivities').innerText =  activ.length;
-	var sortedActiv = activ.sort((a, b) => a.value - b.value);
+	var sortedActiv = activ.sort((a, b) => b.value - a.value)
 	document.getElementById('firstMost').innerText =  sortedActiv[0].key
 	document.getElementById('secondMost').innerText =  sortedActiv[1].key
 	document.getElementById('thirdMost').innerText =  sortedActiv[2].key
 
+// Distance
+	// document.getElementById('longestActivityType').innerText =  sort2[0].distance
+	// document.getElementById('shortestActivityType').innerText = sort2[2].distance
+
+// Weekend/weekday (Average across all activities)
+	// document.getElementById('weekdayOrWeekendLonger').innerText = "Weekdays"
+
+// Distance from all 3 activites on different days
+	var threeDis = [
+		{key: "Sun", distance: 0},
+		{key: "Mon", distance: 0},
+		{key: "Tue", distance: 0},
+		{key: "Wed", distance: 0},
+		{key: "Thu", distance: 0},
+		{key: "Fri", distance: 0},
+		{key: "Sat", distance: 0},
+	]
+
+	for (let i of tweet_array) { // Adds distance across top three activites
+		if ((i.activityType === sortedActiv[0].key) || (i.activityType === sortedActiv[1].key) || (i.activityType === sortedActiv[2].key)){
+			threeDis[i.time.getDay()].distance += i.distance
+		}
+	}
+	
 	//TODO: create the visualizations which group the three most-tweeted activities by the day of the week.
 	//Use those visualizations to answer the questions about which activities tended to be longest and when.
+	distnace_vis_spec = {
+		"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+	   "description": "A graph of the distances by day of the week for all of the three most tweeted-about activities.",
+	   "data": {
+		 "values": [ 
+			 { "Day of the Week": threeDis[0].key, "Distance": threeDis[0].distance},
+			 { "Day of the Week": threeDis[1].key, "Distance": threeDis[1].distance},
+			 { "Day of the Week": threeDis[2].key, "Distance": threeDis[2].distance},
+			 { "Day of the Week": threeDis[3].key, "Distance": threeDis[3].distance},
+			 { "Day of the Week": threeDis[4].key, "Distance": threeDis[4].distance},
+			 { "Day of the Week": threeDis[5].key, "Distance": threeDis[5].distance},
+			 { "Day of the Week": threeDis[6].key, "Distance": threeDis[6].distance}
+		 ]
+ 
+	   },
+	   "mark": 'point',
+	   "encoding": {
+		  "x": {
+			  field: "time (day)",
+			  type: "nominal",
+			 axis: {
+				 title: "Distances by Day of Week",
+			 }
+		  },
+		 
+		 "y": {
+			 field: "distance",
+			 type: "quantitative"
+	
+			}
+ 
+		  }
+	   }
+
+	   vegaEmbed('#distanceVis', distance_vis_spec, {actions:false});
+
 }
+
+
 
 //Wait for the DOM to load
 document.addEventListener('DOMContentLoaded', function (event) {
