@@ -75,14 +75,14 @@ function parseTweets(runkeeper_tweets) {
 
 	vegaEmbed('#activityVis', activity_vis_spec, {actions:false});
 
-// Activity
+// Changing html elements for activites for number of activites, first, second, and third activites 
 	document.getElementById('numberActivities').innerText =  activ.length;
 	var sortedActiv = activ.sort((a, b) => b.value - a.value)
 	document.getElementById('firstMost').innerText =  sortedActiv[0].key
 	document.getElementById('secondMost').innerText =  sortedActiv[1].key
 	document.getElementById('thirdMost').innerText =  sortedActiv[2].key
 
-// Distance
+// Changing html elements for longest and shorted activity types among the top 3
 	var sort23 = [sortedActiv[0], sortedActiv[1], sortedActiv[2]]
 	var sort2 = sort23.sort((a,b) => b.distance - a.distance)
 	document.getElementById('longestActivityType').innerText =  sort2[0].key
