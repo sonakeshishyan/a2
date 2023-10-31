@@ -30,12 +30,15 @@ function parseTweets(runkeeper_tweets) {
 			if (i.activityType == activ[key].key) {
 				activ[key].value += 1
 				let num = i.distance.toFixed(2)
-				activ[key].distance += Number(num)
+				if (num > 0) {
+					activ[key].distance += Number(num)
+				}
 				}
 			//so it doesnt keep going once done already
 			}
 		}
-	
+	//create the visualizations which group the three most-tweeted activities by the day of the week.
+	//Use those visualizations to answer the questions about which activities tended to be longest and when.
 	 activity_vis_spec = {
 	   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 	  "description": "A graph of the number of Tweets containing each type of activity.",
@@ -83,7 +86,7 @@ function parseTweets(runkeeper_tweets) {
 	var sort23 = [sortedActiv[0], sortedActiv[1], sortedActiv[2]]
 	var sort2 = sort23.sort((a,b) => b.distance - a.distance)
 	document.getElementById('longestActivityType').innerText =  sort2[0].key
-	document.getElementById('shortestActivityType').innerText = sort2[1].key
+	document.getElementById('shortestActivityType').innerText = sort2[2].key
 
 // Weekend/weekday (Average across all activities)
 	document.getElementById('weekdayOrWeekendLonger').innerText = "Weekends"
@@ -102,13 +105,12 @@ function parseTweets(runkeeper_tweets) {
 		}
 	}
 
-	//TODO: create the visualizations which group the three most-tweeted activities by the day of the week.
-	//Use those visualizations to answer the questions about which activities tended to be longest and when.
+// Graph that plots each tweet according to their activites and their distances 
 	distance_vis_spec = {
 		"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 	   "description": "A graph of the distances by day of the week for all of the three most tweeted-about activities.",
 	   "data": {
-			"values": threeDis
+			"values": threeDis // Using values from new array that has activity, value, and distance
 	   },
 	   "mark": 'point',
 	   "encoding": {
@@ -129,6 +131,7 @@ function parseTweets(runkeeper_tweets) {
  
 	   }
 
+	   //Aggregated visual graph that shows what each top-3 activity and its mean distance was on different days
 	   agr_vis_spec = {
 		"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 	   "description": "A graph of the mean distances by day of the week for all of the three most tweeted-about activities.",
@@ -152,14 +155,10 @@ function parseTweets(runkeeper_tweets) {
 			 type: "nominal",
 			},	  
 			 
-		   },
-
-		   
-			// "color": {
-			// 	"field:": "weather",
-			// 	"type": "quantitative",
-			// },	  
+		   },  
 	   }
+
+	   // Used the two graphs as variables to allow the code that lets them switch between button pressing 
 		
 		var graph1 = document.getElementById("distanceVis");
 		var graph2 = document.getElementById("distanceVisAggregated");
@@ -171,6 +170,7 @@ function parseTweets(runkeeper_tweets) {
 
 		document.getElementById('aggregate').addEventListener("click",functionName);
 
+		// Creates the ability to click the button and switch graphs
 		function functionName(){
 			if (graph1.style.display == "block")
 			{
@@ -186,11 +186,7 @@ function parseTweets(runkeeper_tweets) {
 
 			}
 			
-
-
 }
-
-
 
 //Wait for the DOM to load
 document.addEventListener('DOMContentLoaded', function (event) {
