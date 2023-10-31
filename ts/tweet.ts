@@ -81,12 +81,16 @@ class Tweet {
             var mile = Number(math2[1].trim()) / 1.609
             return mile
         }
-        else {
+        if (number.trim().includes("mi")) {
             var math = number.trim().split("mi")
             var math2 = math[0].split("a")
             var mile1 = Number(math2[1].trim())
             return mile1
         }
+        else {
+            return 0
+        }
+
     }
 
     getHTMLTableRow(rowNumber:number):string {

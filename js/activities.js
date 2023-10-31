@@ -29,7 +29,8 @@ function parseTweets(runkeeper_tweets) {
 		for (var key in activ) {
 			if (i.activityType == activ[key].key) {
 				activ[key].value += 1
-				activ[key].distance += i.distance
+				let num = i.distance.toFixed(2)
+				activ[key].distance += Number(num)
 				}
 			//so it doesnt keep going once done already
 			}
@@ -79,11 +80,13 @@ function parseTweets(runkeeper_tweets) {
 	document.getElementById('thirdMost').innerText =  sortedActiv[2].key
 
 // Distance
-	// document.getElementById('longestActivityType').innerText =  sort2[0].distance
-	// document.getElementById('shortestActivityType').innerText = sort2[2].distance
+	var sort23 = [sortedActiv[0], sortedActiv[1], sortedActiv[2]]
+	var sort2 = sort23.sort((a,b) => b.distance - a.distance)
+	document.getElementById('longestActivityType').innerText =  sort2[0].key
+	document.getElementById('shortestActivityType').innerText = sort2[1].key
 
 // Weekend/weekday (Average across all activities)
-	// document.getElementById('weekdayOrWeekendLonger').innerText = "Weekdays"
+	document.getElementById('weekdayOrWeekendLonger').innerText = "Weekends"
 	var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 	
 // Distance from all 3 activites on different days
@@ -94,10 +97,10 @@ function parseTweets(runkeeper_tweets) {
 			var preday = i.time.getDay()
 			var day = days[preday]
 			var distance = i.distance
-			threeDis.push({day, distance})
+			var activity = i.activityType
+			threeDis.push({day, distance, activity})
 		}
 	}
-
 
 	//TODO: create the visualizations which group the three most-tweeted activities by the day of the week.
 	//Use those visualizations to answer the questions about which activities tended to be longest and when.
@@ -116,14 +119,74 @@ function parseTweets(runkeeper_tweets) {
 
 		   "y": {
 			 field: "distance",
-			 type: "quantitative"}
+			 type: "quantitative"
+			},
+			"color": {
+				field: "activity",
+				type: "nominal",
+			},	 
 		   },
+ 
+	   }
+
+	   agr_vis_spec = {
+		"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+	   "description": "A graph of the mean distances by day of the week for all of the three most tweeted-about activities.",
+	   "data": {
+			"values": threeDis
+	   },
+	   "mark": 'point',
+	   "encoding": {
+		  "x": {
+			field: "day",
+			type: "nominal",
+			},
+
+		   "y": {
+			 aggregate: "mean",
+			 field: "distance",
+			 type: "quantitative"},
+
+		  "color": {
+			 field: "activity",
+			 type: "nominal",
+			},	  
+			 
+		   },
+
+		   
 			// "color": {
 			// 	"field:": "weather",
 			// 	"type": "quantitative",
 			// },	  
 	   }
+		
+		var graph1 = document.getElementById("distanceVis");
+		var graph2 = document.getElementById("distanceVisAggregated");
+
 	   vegaEmbed('#distanceVis', distance_vis_spec, {actions:false});
+	   graph1.style.display = "block"
+	   vegaEmbed('#distanceVisAggregated', agr_vis_spec, {actions:false});
+	   graph2.style.display = "none"
+
+		document.getElementById('aggregate').addEventListener("click",functionName);
+
+		function functionName(){
+			if (graph1.style.display == "block")
+			{
+				graph1.style.display = "none";
+				graph2.style.display = "block";
+				document.getElementsByClassName("btn btn-primary")[0].textContent = "Show activities";
+			}
+			else {
+				graph2.style.display = "none";
+				graph1.style.display = "block";
+				document.getElementsByClassName("btn btn-primary")[0].textContent = "Show means";
+			}
+
+			}
+			
+
 
 }
 
