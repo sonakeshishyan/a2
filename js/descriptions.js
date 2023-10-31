@@ -21,6 +21,7 @@ function parseTweets(runkeeper_tweets) {
 		}
 }
 
+//Checks when something is being typed in the box and adds to array 
 function addEventHandlerForSearch() {
 	const textFilt = document.querySelector('#textFilter');
 	textFilt.addEventListener("input", function() {
@@ -30,6 +31,7 @@ function addEventHandlerForSearch() {
 			if (i.text.includes(this.value)){
 				searchArray.push(i.text)
 			} 
+		document.getElementById("searchCount").innerText = searchArray.length
 		}
 	//	getHTMLTableRow(searchArray.length)
 	});
