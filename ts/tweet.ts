@@ -58,10 +58,8 @@ class Tweet {
             }
         }      
         return "";  
-        //TODO: parse the activity type from the text of the tweet
        
     }
-
 
     get distance():number {
         if(this.source != 'completed_event') {
@@ -94,7 +92,10 @@ class Tweet {
     }
 
     getHTMLTableRow(rowNumber:number):string {
+        var number = rowNumber + 1
+        var activity = this.activityType
+        var tweet = this.writtenText
         //TODO: return a table row which summarizes the tweet with a clickable link to the RunKeeper activity
-        return "<tr> </tr>";
+        return "<tr> number\n,activity\n,tweet\n </tr>";
     }
 }

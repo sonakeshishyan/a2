@@ -29,13 +29,17 @@ function addEventHandlerForSearch() {
 		var searchArray = [];
 		for (let i of writtenTweets){
 			if (i.text.includes(this.value)){
-				searchArray.push(i.text)
+				searchArray.push(i)
 			} 
 		document.getElementById("searchCount").innerText = searchArray.length
 		}
+	//	var tableArray = []
+		for (let j = 0; j < searchArray.length; j++){
+			var tweet = searchArray[j]
+			
+		}
 	//	getHTMLTableRow(searchArray.length)
 	});
-	//TODO: Search the written tweets as text is entered into the search box, and add them to the table
 }
 
 //Wait for the DOM to load
